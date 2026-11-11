@@ -1,6 +1,6 @@
 # Odd Jobs
 
-A free, browser-based career randomiser with a rarity roulette wheel, a three-reel slot machine and a searchable catalogue of over 66,000 job titles. Built as a lightweight static website with no accounts, API keys or cash wagering.
+A free, browser-based career randomiser with a rarity roulette wheel, a three-reel slot machine and a searchable catalogue of over 65,000 job titles. Built as a lightweight static website with no accounts, API keys or cash wagering.
 
 ## Play
 
@@ -13,10 +13,10 @@ A free, browser-based career randomiser with a rarity roulette wheel, a three-re
 
 The source titles are assembled and deduplicated from:
 
-- [gpriday/job-titles](https://huggingface.co/datasets/gpriday/job-titles), CC BY 4.0. Roughly 65,230 unique titles.
+- [gpriday/job-titles](https://huggingface.co/datasets/gpriday/job-titles), CC BY 4.0. Over 65,000 entries before deduplication and exclusion of adult-oriented titles.
 - [European Commission ESCO](https://esco.ec.europa.eu/en), including 499 individual descriptions retrieved from its occupation API.
 - [Jobs and Skills Australia](https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles), February 2026 ANZSCO occupation dataset (1,236 occupations and unit groups with descriptive text, 296 occupation groups with usable weekly earnings values).
-- A small curated set of unusual, entertainment and adult-industry titles; adult-industry titles are descriptive and non-graphic.
+- A small curated set of unusual and niche roles. Adult-entertainment titles are excluded from the published catalogue.
 
 **Australia-specific earnings:** published data represent ABS May 2025 *median weekly earnings of full-time non-managerial adult-rate employees* by ANZSCO occupation group. A published group median is annualised by multiplying the weekly figure by 52 and displayed as an **official occupation-group median** (not an official individual salary). The surrounding range is a modelled indicative band, never an official percentile interval.
 
@@ -42,3 +42,7 @@ Accessibility: semantic navigation, keyboard-operable controls, responsive scree
 ## Licence and sources
 
 Site code is made for Odd Jobs; separately sourced occupation data retain their upstream licences and attribution. Official occupation descriptions may contain national terms that do not apply to every country.
+
+## Visual design references
+
+The interface is an original implementation informed by the [Linear March 2026 UI refresh](https://linear.app/now/behind-the-latest-design-refresh) (quieter navigation, consistent headers, low-contrast separators) and [Raycast's dark design language](https://www.raycast.com/) (restrained surfaces and a clear single interaction). No proprietary design assets or brand components are copied.

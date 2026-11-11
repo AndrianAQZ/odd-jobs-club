@@ -6,22 +6,26 @@ const segments=['common','uncommon','common','rare','common','uncommon','common'
 const palette=Object.fromEntries(TIERS.map(t=>[t.key,t.colour]));
 const DEG=360/segments.length;let spinAngle=0,spinning=false,grouped;
 function drawWheel(){
- const R=440,n=segments.length,step=Math.PI*2/n;
- ctx.clearRect(0,0,900,900);ctx.save();ctx.translate(450,450);
- for(let i=0;i<n;i++){
+ const R=435,inner=132,step=Math.PI*2/segments.length;
+ ctx.clearRect(0,0,900,900);
+ ctx.save();ctx.translate(450,450);
+ for(let i=0;i<segments.length;i++){
   const start=-Math.PI/2-step/2+i*step,end=start+step;
-  ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,R,start,end);ctx.closePath();ctx.fillStyle=palette[segments[i]];ctx.fill();
-  ctx.lineWidth=4;ctx.strokeStyle='#e7c182';ctx.stroke();
-  ctx.save();ctx.rotate(start+step/2);
-  const grad=ctx.createLinearGradient(165,-12,420,12);grad.addColorStop(0,'#ffffff0d');grad.addColorStop(.65,'#ffffff00');grad.addColorStop(1,'#ffffff24');
-  ctx.fillStyle=grad;ctx.fillRect(142,-R*step/2,276,R*step);
-  ctx.strokeStyle='#fff4c43d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(180,0);ctx.lineTo(363,0);ctx.stroke();
-  ctx.save();ctx.translate(326,0);ctx.rotate(Math.PI/2);ctx.textAlign='center';ctx.textBaseline='middle';
-  const label=segments[i].toUpperCase();ctx.fillStyle=label==='LEGENDARY'?'#30210c':'#fff6d9';ctx.font='700 15px "DM Sans",sans-serif';ctx.fillText(label,0,0);ctx.restore();ctx.restore();
+  ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,R,start,end);ctx.closePath();
+  ctx.fillStyle=palette[segments[i]];ctx.fill();
+  ctx.strokeStyle='#0e182555';ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,R,start,end);ctx.closePath();
+  const gleam=ctx.createRadialGradient(0,0,inner,0,0,R);
+  gleam.addColorStop(0,'#ffffff0e');gleam.addColorStop(.68,'#ffffff00');gleam.addColorStop(1,'#ffffff18');
+  ctx.fillStyle=gleam;ctx.fill();
  }
- ctx.beginPath();ctx.arc(0,0,420,0,Math.PI*2);ctx.strokeStyle='#d9af66';ctx.lineWidth=10;ctx.stroke();
- ctx.beginPath();ctx.arc(0,0,392,0,Math.PI*2);ctx.strokeStyle='#fff7db62';ctx.lineWidth=3;ctx.stroke();
- ctx.beginPath();ctx.arc(0,0,125,0,Math.PI*2);ctx.fillStyle='#14281e';ctx.fill();ctx.strokeStyle='#e2b971';ctx.lineWidth=12;ctx.stroke();
+ ctx.beginPath();ctx.arc(0,0,R-2,0,Math.PI*2);
+ ctx.strokeStyle='#eef4f4a0';ctx.lineWidth=5;ctx.stroke();
+ ctx.beginPath();ctx.arc(0,0,R-21,0,Math.PI*2);
+ ctx.strokeStyle='#ffffff15';ctx.lineWidth=2;ctx.stroke();
+ ctx.beginPath();ctx.arc(0,0,inner,0,Math.PI*2);
+ ctx.fillStyle='#101b20';ctx.fill();
+ ctx.strokeStyle='#ffffff35';ctx.lineWidth=5;ctx.stroke();
  ctx.restore();
 }
 drawWheel();

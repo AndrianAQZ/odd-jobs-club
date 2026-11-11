@@ -37,17 +37,14 @@ export const EXTRAS = [
  'Bed Setter','Mixed Runner','Snake Milker','Professional Sleeper','Water Slide Tester','Pet Food Taster',
  'Golf Ball Diver','Professional Mourner','Fortune Cookie Writer','Chicken Sexer','Island Caretaker',
  'Human Statue Performer','Odour Judge','Worm Grunter','Iceberg Mover','Mermaid Performer','Ghost Hunter',
- 'Professional Cuddler','Crime Scene Cleaner','Stunt Double','Adult Film Performer','Adult Content Creator',
- 'Erotic Fiction Writer','Exotic Dancer','Intimacy Coordinator','Adult Entertainment Producer',
- 'Sexual Wellness Educator','Erotic Photographer','Adult Entertainment Venue Manager','Online Adult Performer'
+ 'Professional Cuddler','Crime Scene Cleaner','Stunt Double'
 ];
 export const CATEGORIES=[
  'All industries','Technology & data','Health & medicine','Engineering','Business & finance','Law & government',
  'Arts & media','Education & research','Construction & trades','Food & hospitality','Transport & logistics',
- 'Nature & agriculture','Sport & recreation','Personal services','Adult industry','Unusual & niche','Other'
+ 'Nature & agriculture','Sport & recreation','Personal services','Unusual & niche','Other'
 ];
 const rules=[
- ['Adult industry', /\b(adult content|adult film|adult entertainment|erotic|exotic dancer|sex worker|pornograph|intimacy coordinator|cam model|adult performer)\b/i],
  ['Unusual & niche',/\b(snake milker|professional sleeper|water slide tester|pet food taster|golf ball diver|professional mourner|fortune cookie|chicken sexer|island caretaker|human statue|odour judge|worm grunter|iceberg mover|mermaid performer|ghost hunter|professional cuddler|crime scene cleaner)\b/i],
  ['Health & medicine',/\b(doctor|surgeon|nurse|medical|physician|cardiolog|clinical|anaesthet|anesthesi|dentist|radiolog|orthodon|therapist|pharmacist|psychiatr|psycholog|health|paramedic|epidemiolog|ophthalmolog|neurolog|veterinar|physiotherap|patholog|biomed|midwi|dietitian|nutritionist)\b/i],
  ['Technology & data',/\b(software|developer|programmer|web design|data|cyber|machine learning|cloud|network|computer|IT\b|digital|artificial intelligence|information technolog|tech lead|chief technology|systems admin|game developer|robotic|UX |UI |blockchain|mobile app|security engineer)\b/i],
@@ -63,6 +60,8 @@ const rules=[
  ['Sport & recreation',/\b(athlete|sport|coach|fitness|trainer|gym|yoga|swim|football|soccer|tennis|climb|surf|ski|referee|lifeguard|martial arts|personal training)\b/i],
  ['Personal services',/\b(hair|beauty|cosmet|makeup|spa |massage|nail|barber|stylist|tattoo|personal shopper|wellness|jeweller|jewelry|interior decorator|groomer)\b/i]
 ];
+const excludedCareer = /\b(?:erotic\w*|porn\w*|prostitut\w*|sexual\w*|sex\b|exotic\s+danc\w*|burlesque|nud(?:e|ist)\w*|striptease\w*|brothel\w*|fetish\w*|dominatrix|camgirl\w*|cam\s*model\w*|onlyfans|intimacy\s+coordinator|adult\s+(?:film|content|entertainment|performer|model|venue|webcam)\w*|escort\s+service|social\s+escort)\b|^escort$/i;
+export function allowedJob(title){return typeof title==='string'&&!excludedCareer.test(title)}
 export function industry(title){for(const [name,pattern] of rules)if(pattern.test(title))return name;return 'Other'}
 export function rand(n){if(n<=0)throw new Error('Empty job pool');const a=new Uint32Array(1),max=4294967296,lim=max-(max%n);do{crypto.getRandomValues(a)}while(a[0]>=lim);return a[0]%n}
 export function choose(arr){return arr[rand(arr.length)]}
@@ -80,7 +79,6 @@ const special={
  'water slide tester':{description:'Tests waterslides for ride experience and reports flow, comfort and observed safety issues to operators or designers. Does not replace formal engineering safety certification.',tasks:['Test ride conditions under approved safety procedures','Document water flow and ride experience','Flag maintenance and operational concerns'],path:'Experience in water-park operations, lifeguarding or leisure-facility safety is relevant.',code:'4523'},
  'golf ball diver':{description:'Retrieves lost golf balls from ponds and water hazards at golf courses, often in poor visibility. Sorts and cleans recoverable balls for reuse or resale.',tasks:['Plan safe dives around water hazards','Recover and sort submerged golf balls','Clean equipment and follow diving safety procedures'],path:'Commercial diving experience, site safety assessment and appropriate diving credentials may be required.',code:'3999'},
  'chicken sexer':{description:'Sorts newly hatched chicks by sex at poultry hatcheries using trained visual identification methods. Accuracy, animal welfare and biosecurity are central to the work.',tasks:['Examine chicks using approved identification methods','Separate and count chicks accurately','Follow hatchery biosecurity and animal-welfare standards'],path:'Specialist hatchery training and supervised practice.',code:'8415'},
- 'adult content creator':{description:'Plans, produces and distributes media intended for adult audiences where permitted by law. Work includes production scheduling, platform management, privacy and consent procedures.',tasks:['Plan and edit media for selected platforms','Manage permissions and protect personal data','Follow applicable legal and workplace rules'],path:'No single qualification; production skills, contracts, consent and jurisdiction-specific legal requirements matter.',code:'2123'}
 };
 // Selected niche roles receive manually written descriptions instead of generic filler.
 Object.assign(special,{
@@ -97,15 +95,6 @@ Object.assign(special,{
  'professional cuddler':{description:'Provides non-sexual, consent-based companionship through agreed platonic touch sessions where legally permitted. Boundaries, communication and client wellbeing are central.',tasks:['Agree on professional boundaries and consent','Maintain a safe session environment','Keep appointments, records and privacy safeguards'],path:'Training in communication, safeguarding and professional boundaries is important.',code:'4231'},
  'crime scene cleaner':{description:'Safely cleans and remediates locations contaminated by bodily fluids or hazardous material after emergency services have released the site. The role requires strong infection-control procedures.',tasks:['Assess contamination and prepare protective equipment','Remove hazardous waste using approved disposal methods','Disinfect, document and restore the site'],path:'Biohazard remediation, infection-control training and personal protective equipment competency.',code:'8112'},
  'stunt double':{description:'Performs carefully planned physical action on camera in place of an actor. The work includes falls, fights, driving or other specialist movements under stunt coordination.',tasks:['Rehearse action sequences with coordinators','Check protective equipment and filming safety','Perform repeatable movements for camera continuity'],path:'Advanced physical discipline, specialist stunt training and film set safety.',code:'2111'},
- 'adult film performer':{description:'Works as an on-camera performer in legally permitted adult media productions. Contracts, performer consent, workplace health and protection of personal information are essential.',tasks:['Review production agreements and boundaries','Rehearse camera cues and coordinate with crew','Follow legal, health and privacy protocols'],path:'Performer skills, legal advice and knowledge of applicable adult-industry protections.',code:'2111'},
- 'erotic fiction writer':{description:'Writes fiction for adult readers, developing characters, dialogue and narratives for print or digital publication. The work also involves revision, editing and distribution.',tasks:['Plan and draft stories in an agreed genre','Edit pacing, dialogue and manuscript quality','Manage submissions, contracts or self-publishing'],path:'Writing portfolio and publishing knowledge; no mandatory qualification.',code:'2122'},
- 'exotic dancer':{description:'Performs choreographed dance in legally permitted adult-entertainment venues or productions. Fitness, stagecraft, consent and personal safety are important parts of the job.',tasks:['Develop and rehearse dance routines','Coordinate performance schedules','Follow venue rules, contracts and professional boundaries'],path:'Dance experience, fitness and awareness of local venue regulations.',code:'2111'},
- 'intimacy coordinator':{description:'Works with film, television and theatre teams to plan intimate scenes, clarify boundaries and support consent through rehearsal and filming. Coordinates performers, directors and safety procedures.',tasks:['Discuss boundaries with performers privately','Choreograph and document agreed action','Monitor set protocols and resolve changes in consent'],path:'Specialised intimacy-coordination training and production-set experience.',code:'2123'},
- 'adult entertainment producer':{description:'Plans and manages legally permitted adult-media productions, coordinating budgets, crews, scheduling, permissions and distribution.',tasks:['Organise production plans and budgets','Manage performer consent and legal documentation','Supervise editing, publishing and delivery'],path:'Media production and business experience plus jurisdiction-specific compliance.',code:'2121'},
- 'sexual wellness educator':{description:'Provides educational information about sexual health, consent, relationships and wellbeing within their professional scope. May develop workshops or resources for community and adult audiences.',tasks:['Develop age-appropriate educational materials','Explain evidence-based health information','Refer specialised clinical questions to qualified providers'],path:'Relevant health education training and safeguarding expertise.',code:'2725'},
- 'erotic photographer':{description:'Plans and produces adult-oriented photographic work with agreed creative direction and consent. Also manages lighting, retouching, intellectual property and image privacy.',tasks:['Plan shoots with models and clients','Set lighting and capture agreed images','Edit work and protect consent records and distribution rights'],path:'Professional photography portfolio, production safety and contract knowledge.',code:'2113'},
- 'adult entertainment venue manager':{description:'Oversees day-to-day operations of a legally permitted adult-entertainment venue, including staffing, customer service, financial records, licensing and safeguarding.',tasks:['Coordinate shifts, service and venue operations','Maintain regulatory and safety documentation','Resolve operational and customer-service issues'],path:'Hospitality management experience and required local licences.',code:'1419'},
- 'online adult performer':{description:'Creates live or recorded adult entertainment for online audiences where lawful. Work may involve camera operation, scheduling, platform rules and protection of identity and data.',tasks:['Manage production and broadcasting equipment','Set boundaries, contracts and privacy safeguards','Monitor platform compliance and audience interactions'],path:'Production, digital platform management and legal and personal safety knowledge.',code:'2111'}
 });
 const families=[
  [/anaesthet|anesthesi/i,'Provides anaesthesia and manages patient wellbeing around surgery and medical procedures.','Assess patients, plan anaesthesia, and monitor vital signs during procedures.','Specialist medical degree, registration and postgraduate training.'],
@@ -145,7 +134,6 @@ const sectorCopy={
  'Nature & agriculture':['Works with living systems, environmental resources or outdoor operations.','Monitor conditions, maintain resources and follow welfare or safety requirements.','Practical experience and relevant technical training.'],
  'Sport & recreation':['Provides activity, sport or recreation services.','Prepare sessions, supervise participants and monitor safety.','Sporting, first-aid or instructional accreditation.'],
  'Personal services':['Provides a specialised personal or customer service.','Prepare materials, assess client requirements and maintain hygiene.','Relevant vocational training or practical skills.'],
- 'Adult industry':['Performs legally permitted adult-industry work and related production or customer services.','Coordinate content or services; protect privacy, consent and workplace safety.','Legal compliance, production skills and workplace protocols.'],
  'Unusual & niche':['Carries out a specialised service or task in a niche work setting.','Use site-specific methods, track results and follow relevant safety procedures.','Practical supervised training relevant to the particular role.'],
  'Other':['Performs a defined set of operational or specialist tasks for an employer or customer.','Follow work instructions, coordinate with colleagues and document completed work.','Training and experience specific to the employer and role.']
 };
@@ -227,7 +215,7 @@ const GROUP_ALIAS=[
  [/accountant|financial accountant/i,'2211'],[/graphic designer|digital designer/i,'2324'],
  [/primary school teacher/i,'2412'],[/secondary school teacher|high school teacher/i,'2414'],
  [/software architect|cloud architect/i,'2613'],[/civil engineer/i,'2332'],[/housekeep|bed setter/i,'8114'],
- [/food runner|mixed runner|waiter/i,'4315'],[/mail deliverer|postal delivery|postal worker|mail carrier|postman|postwoman/i,'5612'],[/delivery driver|parcel deliverer|courier driver/i,'7321'],[/adult content|film performer|erotic photographer/i,'2123']
+ [/food runner|mixed runner|waiter/i,'4315'],[/mail deliverer|postal delivery|postal worker|mail carrier|postman|postwoman/i,'5612'],[/delivery driver|parcel deliverer|courier driver/i,'7321']
 ];
 let cataloguePromise;
 export async function catalogue(){
@@ -239,7 +227,7 @@ export async function catalogue(){
  const [raw,au,esco]=files;
  const seen=new Map();
  for(const title of [...raw,...au.map(x=>x.title),...esco.map(x=>x.title),...LEGENDARY,...EPIC,...RARE,...EXTRAS]){
-  if(typeof title!=='string')continue;const clean=title.trim();if(!clean||clean.length>95)continue;
+  if(typeof title!=='string')continue;const clean=title.trim();if(!clean||clean.length>95||!allowedJob(clean))continue;
   const key=clean.toLowerCase();if(!seen.has(key))seen.set(key,{title:clean,lower:key,category:industry(clean)});
  }
  const jobs=Array.from(seen.values()).sort((a,b)=>a.title.localeCompare(b.title,'en'));
@@ -278,6 +266,7 @@ function rangeEstimate(mid,pct){return [Math.max(30000,Math.round(mid*(1-pct)/50
 function splitTasks(s){return s.split(';').map(x=>x.trim()).filter(Boolean)}
 export async function profile(title){
  const data=await catalogue();
+ if(!data.byTitle.has(String(title).toLowerCase()))throw new Error('Career is not in the directory');
  const found=roleMatch(title,data),code=found?.row.code;
  const group=code?.length===6?data.byCode.get(code.slice(0,4)):found?.row;
  const executive=executiveModels[title.toLowerCase()];
@@ -305,7 +294,7 @@ export async function profile(title){
   tasks=inferred?.tasks||splitTasks(family[2]);pathway=family[3];
  }
  if(tasks.length<3){const rest=(sectorCopy[cat]||sectorCopy.Other)[1].split(';').map(x=>x.trim());tasks=[...tasks,...rest].slice(0,3)}
- context=cat==='Food & hospitality'?'Accommodation, catering and service workplaces':cat==='Technology & data'?'Technology companies, public-sector teams and in-house IT':cat==='Health & medicine'?'Hospitals, clinics and specialist practices':cat==='Engineering'?'Technical offices, worksites and industrial facilities':cat==='Construction & trades'?'Construction sites, workshops and client premises':cat==='Nature & agriculture'?'Outdoor sites, field stations, farms and conservation areas':cat==='Arts & media'?'Studios, agencies, production teams or freelance':cat==='Education & research'?'Schools, campuses, laboratories and research teams':cat==='Transport & logistics'?'Transport networks, depots and distribution operations':cat==='Business & finance'?'Offices, financial institutions and consulting teams':cat==='Adult industry'?'Legally permitted production, digital or venue operations':'Work settings vary by employer and specialisation';
+ context=cat==='Food & hospitality'?'Accommodation, catering and service workplaces':cat==='Technology & data'?'Technology companies, public-sector teams and in-house IT':cat==='Health & medicine'?'Hospitals, clinics and specialist practices':cat==='Engineering'?'Technical offices, worksites and industrial facilities':cat==='Construction & trades'?'Construction sites, workshops and client premises':cat==='Nature & agriculture'?'Outdoor sites, field stations, farms and conservation areas':cat==='Arts & media'?'Studios, agencies, production teams or freelance':cat==='Education & research'?'Schools, campuses, laboratories and research teams':cat==='Transport & logistics'?'Transport networks, depots and distribution operations':cat==='Business & finance'?'Offices, financial institutions and consulting teams':'Work settings vary by employer and specialisation';
  const tier=tierFor(title,data);
  return {title,cat,tier,description,descriptionSource,tasks,pathway,context,annual:median,lo:range[0],hi:range[1],official,confidence,basis,payType,group:group?.title||null,source:official||matchPay?'https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles':'https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles',sources:['https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles','https://esco.ec.europa.eu/en'],hours:'Full-time annualised equivalent; actual hours and availability vary',lastUpdated:'Source period May 2025; estimates are indicative'};
 }
@@ -322,7 +311,7 @@ export async function pools(){const data=await catalogue();if(poolCache.has(data
  // Preserve every title in exactly one tier; no duplicates or missing entries.
  poolCache.set(data,grouped);return grouped;
 }
-export function savedJobs(){try{return new Set(JSON.parse(localStorage.getItem('oj-saved-v2')||localStorage.getItem('oddjobs-saved')||'[]'))}catch{return new Set()}}
+export function savedJobs(){try{return new Set(JSON.parse(localStorage.getItem('oj-saved-v2')||localStorage.getItem('oddjobs-saved')||'[]').filter(allowedJob))}catch{return new Set()}}
 export function toggleSave(title){const set=savedJobs();if(set.has(title))set.delete(title);else set.add(title);try{localStorage.setItem('oj-saved-v2',JSON.stringify([...set]))}catch{}return set.has(title)}
 export function roleUrl(title){return './job.html?role='+encodeURIComponent(title)}
 export function navActive(){const pathname=location.pathname.split('/').pop()||'index.html';for(const el of document.querySelectorAll('[data-nav]'))el.classList.toggle('active',el.getAttribute('data-nav')===pathname)}
