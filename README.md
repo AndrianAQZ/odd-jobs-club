@@ -4,7 +4,7 @@ A casino-inspired, **no-stakes** random career explorer with a roulette wheel, a
 
 ## Games
 
-- **Career roulette:** choose an industry, select the complete catalogue or editorial spotlight, and spin. The outcome is chosen uniformly from the stated pool before the animation; the wheel's pointer lands on that result.
+- **Career roulette:** optionally choose an industry and spin. The 14 numbered wheel sectors are **decorative only**; they are not a list of possible jobs. When the wheel stops, a job is independently and uniformly sampled from the **entire catalogue** (or every job in the selected industry). A job never needs to appear on the wheel or current directory page to be drawn.
 - **Lucky sevens:** three independent uniform digits between 0 and 9 are drawn, displayed one after the other, and mapped to a theme. Exact `777` is a **1-in-1,000** high-flyer draw; `000` is a tough-gig draw; other triples are dream careers; pairs are everyday careers; remaining outcomes draw from the full catalogue. These are editorial groupings, not measured salary rankings.
 - **Directory:** search by title, filter by industry, browse in pages, save jobs locally, and share a result. Saved jobs stay in the browser using localStorage.
 
