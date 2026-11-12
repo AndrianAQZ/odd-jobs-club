@@ -4,7 +4,7 @@ function label(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 async function init(){if(!title){location.replace('./directory.html');return}
  const d=await catalogue();if(!d.byTitle.has(title.toLowerCase())){location.replace('./directory.html');return}const p=await profile(title),tier=p.tier;
  document.title=title+' — Odd Jobs';$('crumb-title').textContent=title.toUpperCase();$('profile-title').textContent=title;
- $('profile-industry').textContent=p.cat.toUpperCase();
+ $('profile-industry').textContent=p.cat.toUpperCase();$('profile-category-id').textContent=p.cat.toUpperCase();
  $('profile-tier').textContent=tier.toUpperCase();$('profile-tier').className='tier-badge tier-'+tier;
  $('profile-desc').textContent=p.description;$('profile-desc-source').textContent=p.descriptionSource;
  $('profile-tasks').replaceChildren();for(const task of p.tasks.slice(0,5)){const li=document.createElement('li');li.textContent=task;$('profile-tasks').append(li)}

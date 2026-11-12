@@ -42,7 +42,3 @@ Accessibility: semantic navigation, keyboard-operable controls, responsive scree
 ## Licence and sources
 
 Site code is made for Odd Jobs; separately sourced occupation data retain their upstream licences and attribution. Official occupation descriptions may contain national terms that do not apply to every country.
-
-## Visual design references
-
-The interface is an original implementation informed by the [Linear March 2026 UI refresh](https://linear.app/now/behind-the-latest-design-refresh) (quieter navigation, consistent headers, low-contrast separators) and [Raycast's dark design language](https://www.raycast.com/) (restrained surfaces and a clear single interaction). No proprietary design assets or brand components are copied.

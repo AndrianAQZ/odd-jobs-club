@@ -3,28 +3,43 @@ import {unlock,reelTick,reelStop,jackpot} from './audio.js';
 const windows=[...document.querySelectorAll('.reel-window')],button=document.getElementById('pull-lever'),machine=document.getElementById('slot-machine');
 const status=document.getElementById('slot-status'),result=document.getElementById('slot-result');
 let inMotion=false,groups;
+// Keep each reel on the digit it last displayed between spins.
+const reelDigits=[7,7,7];
+const BASE_INDEX=10;
+const LAST_SPIN_INDEX=80;
 const tough=['Sewer Maintenance Worker','Industrial Cleaner','Waste Collection Worker','Oil Rig Roughneck','Crime Scene Cleaner','Deep Mine Worker','Slaughterhouse Cleaner','Hazardous Waste Technician','Landfill Worker','Mixed Runner','Bed Setter'];
 function prepare(){for(let i=0;i<windows.length;i++){
  const track=windows[i].querySelector('.reel-track');track.replaceChildren();const frag=document.createDocumentFragment();
  for(let n=0;n<130;n++){const cell=document.createElement('span');cell.className='reel-cell';cell.textContent=n%10;frag.appendChild(cell)}
- track.append(frag);requestAnimationFrame(()=>{const height=windows[i].getBoundingClientRect().height;track.style.transition='none';track.style.transform='translateY(-'+7*height+'px)'})
+ track.append(frag);requestAnimationFrame(()=>{const height=windows[i].getBoundingClientRect().height;track.style.transition='none';track.style.transform='translateY(-'+(BASE_INDEX+reelDigits[i])*height+'px)'})
  }}
 function reelPosition(track){const t=getComputedStyle(track).transform;if(t==='none')return 0;return new DOMMatrixReadOnly(t).m42}
 function animateReel(win,i,target,duration){return new Promise(resolve=>{
  const track=win.querySelector('.reel-track'),cellH=win.clientHeight;
- const end=(65+i*15+target)*cellH;
+ // End on a cell with the SAME digit as the result (modulo ten).
+ // The three reels complete different numbers of full revolutions.
+ const endIndex=LAST_SPIN_INDEX+i*20+target;
+ const end=endIndex*cellH;
+ const startIndex=BASE_INDEX+reelDigits[i];
  win.classList.add('rolling');win.classList.remove('stopped');
- track.style.transition='none';track.style.transform='translateY(-'+7*cellH+'px)';track.getBoundingClientRect();
+ track.style.transition='none';track.style.transform='translateY(-'+startIndex*cellH+'px)';track.getBoundingClientRect();
  requestAnimationFrame(()=>{
  track.style.transition='transform '+duration+'ms cubic-bezier(.08,.74,.11,1)';track.style.transform='translateY(-'+end+'px)';
  });
- let prev=-7*cellH,remainder=0,done=false;const started=performance.now();
+ let prev=-startIndex*cellH,remainder=0,done=false;const started=performance.now();
  function frame(){if(done)return;const curr=reelPosition(track);remainder+=Math.max(0,prev-curr);prev=curr;
  if(remainder>=cellH){remainder%=cellH;reelTick(i)}
  if(performance.now()-started<duration+100)requestAnimationFrame(frame)}
  requestAnimationFrame(frame);
- setTimeout(()=>{done=true;track.style.transition='none';track.style.transform='translateY(-'+target*cellH+'px)';
- win.classList.remove('rolling');win.classList.add('stopped');reelStop(i);resolve()},duration+80);
+ setTimeout(()=>{
+  done=true;
+  // Rebase inside the identical repeating strip without changing the visible digit.
+  track.style.transition='none';
+  track.style.transform='translateY(-'+(BASE_INDEX+target)*cellH+'px)';
+  reelDigits[i]=target;
+  win.classList.remove('rolling');win.classList.add('stopped');
+  reelStop(i);resolve();
+ },duration+80);
  })}
 function drawConfetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const colours=['#efc671','#f4e0b4','#b5393e','#668d7c','#e8bc77'];
